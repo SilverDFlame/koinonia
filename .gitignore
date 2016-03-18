@@ -1,3 +1,6 @@
+# IDE Settings
+.idea
+
 # Logs
 logs
 *.log
@@ -25,6 +28,7 @@ build/Release
 
 # Dependency directory
 node_modules
+public/src/main/webapp/bower_components
 
 # Optional npm cache directory
 .npm

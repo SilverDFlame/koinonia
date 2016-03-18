@@ -1,0 +1,14 @@
+{
+  "description": "A homebrew gallery application",
+  "name": "Koinonia",
+  "private": true,
+  "version": "0.0.1-BETA",
+  "devDependencies": {
+    "angular": "^1.5.1",
+    "angular-bootstrap": "^1.2.4",
+    "angular-ui-router": "^0.2.18",
+    "ui-select": "angular-ui-select#^0.16.0",
+    "angular-sanitize": "^1.5.1",
+    "bootstrap": "^3.3.6"
+  }
+}
