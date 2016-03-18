@@ -198,3 +198,15 @@ gulp.task('watch', function() {
       }
     );
 });
+
+gulp.task('build', ['clean-dist'], function() {
+  gulp.start('build-resources');
+});
+
+gulp.task('build-resources', ['node-dependencies', 'html', 'images-optimized', 'fonts', 'config-dist']);
+
+gulp.task('config', ['config-app', 'config-env']);
+
+gulp.task('develop', ['install', 'node-dependencies', 'config', 'watch'], plugins.shell.task([
+  'npm start'
+]));
