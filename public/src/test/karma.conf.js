@@ -16,14 +16,25 @@ module.exports = function(config) {
 
     frameworks: ['jasmine'],
 
-    reporters: ['progress', 'coverage'],
+    reporters: ['coverage','mocha'],
 
     plugins: [
       //Karma will require() these plugins
+      'karma-coverage',
+      'karma-mocha-reporter',
       'karma-jasmine',
       'karma-phantomjs-launcher',
+      'karma-ng-html2js-preprocessor',
       'ng-html2js'
     ],
+    mochaReporter: {
+      output: 'minimal',
+      colors: {
+        success: 'cyan',
+        info: 'bgGreen',
+        error: 'bgRed'
+      }
+    },
 
     preprocessors: {
       '../**/*.html': ['ng-html2js'],

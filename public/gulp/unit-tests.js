@@ -6,16 +6,13 @@ var gulp = require('gulp'),
   fs = require('graceful-fs'),
   _ = require('lodash');
 
-gulp.task('test', ['config-app', 'node-dependencies'], function() {
-  return gulp.src(loadTestFiles())
-    .pipe(karma({
-      configFile: __dirname + '/../src/test/karma.conf.js',
-      action: 'run'
-    }))
-    .on('error', function(err) {
-      console.log(err.message);
-      throw err;
-    });
+gulp.task('test', function(done) {
+  var Server = karma.Server;
+  new Server({
+    configFile: __dirname + '/../src/test/karma.conf.js',
+    files: loadTestFiles(),
+    singleRun: true
+  }, done).start();
 });
 
 function loadTestFiles() {
@@ -23,9 +20,9 @@ function loadTestFiles() {
       dependencies: true,
       devDependencies: true
     }).js.concat([
-      __dirname + '/../node_modules/ng-html2js/bin/ng-html2js.js'
-    ]
-    ),
+      __dirname + '/../node_modules/ng-html2js/bin/ng-html2js.js',
+      __dirname + '/../src/main/webapp/bower_components/angular-mocks/angular-mocks.js'
+    ]),
 
   // store src and test files in separate depth ordered objects
     localSrc = {
@@ -36,7 +33,7 @@ function loadTestFiles() {
   // get all the source-ish files at the public root
   loadFileNames(__dirname + '/../src/main/webapp', [/\/bower_components\//, /\/resources\//, /\/WEB-INF\//]).forEach(function(file) {
     // calculate the "depth" of this file in the dependency hierarchy
-    var depth = file.split('-').length;
+    var depth = file.split('.').length;
 
     if (endsWith(file, '.specs.js')) {
       localSrc.test[depth] = localSrc.test[depth] ? localSrc.test[depth].concat([file]) : [file];
@@ -56,6 +53,7 @@ function loadTestFiles() {
   _.each(localSrc.test, function(files) {
     testFiles = testFiles.concat(files);
   });
+  //console.log(testFiles);
   return testFiles;
 }
 
